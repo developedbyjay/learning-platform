@@ -4,14 +4,14 @@
 	let { children } = $props();
 </script>
 
-<div class="h-full">
-	<div class="fixed inset-y-0 z-50 h-[80px] w-full md:pl-56">
-		<Navbar />
-	</div>
-	<div class="fixed inset-y-0 hidden h-full w-56 flex-col md:flex">
+<div class="grid h-full grid-cols-[200px_1fr_1fr] grid-rows-[100px_1fr]">
+	<div class="hidden md:row-span-2 md:block">
 		<SideBar />
 	</div>
-	<main class="h-full pt-[80px] md:pl-56">
+	<div class="col-span-3">
+		<Navbar />
+	</div>
+	<main class="col-span-3 md:col-start-2">
 		{@render children()}
 	</main>
 </div>

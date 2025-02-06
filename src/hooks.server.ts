@@ -4,7 +4,7 @@ import PocketBase from 'pocketbase';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
-	const { locals, request, url } = event;
+	const { url, locals, request } = event;
 	locals.pb = new PocketBase('http://127.0.0.1:8090');
 
 	// load the store data from the request cookie string
@@ -15,17 +15,21 @@ export async function handle({ event, resolve }) {
 		if (locals.pb.authStore.isValid) {
 			await locals.pb.collection('users').authRefresh();
 		}
-		locals.user = locals.pb.authStore.user;
+		locals.user = locals.pb.authStore.model;
 	} catch {
 		// clear the auth store on failed refresh
 		locals.pb.authStore.clear();
 		locals.user = undefined;
 	}
 
-	if (!locals.user && !['/login', '/register'].includes(url.pathname)) {
+	if (
+		url.pathname.startsWith('/') &&
+		!locals.user &&
+		!['/login', '/register'].includes(url.pathname)
+	) {
+
 		redirect(303, '/login');
 	}
-
 	const response = await resolve(event);
 
 	// send back the default 'pb_auth' cookie to the client with the latest store state

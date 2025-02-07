@@ -16,7 +16,7 @@
 <a
 	{href}
 	class={cn(
-		'flex items-center gap-x-2 pl-6 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-slate-600',
+		'flex items-center gap-x-2 pl-12 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-slate-600',
 		{
 			'bg-primary/20 text-primary hover:bg-primary/20 hover:text-primary': isActive
 		}

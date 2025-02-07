@@ -17,3 +17,14 @@ export const registerSchema = z
 		message: 'Passwords do not match',
 		path: ['passwordConfirm']
 	});
+
+export const createCourseSchema = z.object({
+	title: z.string().min(1),
+	description: z.string(),
+	imageUrl: z.string().optional(),
+	price: z.number({ coerce: true }).optional(),
+	isPublished: z.boolean(),
+	category: z.string().optional()
+});
+
+export const titleSchema = createCourseSchema.pick({ title: true });

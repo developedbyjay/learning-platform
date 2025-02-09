@@ -28,3 +28,9 @@ export const createCourseSchema = z.object({
 });
 
 export const titleSchema = createCourseSchema.pick({ title: true });
+
+export const descriptionSchema = createCourseSchema.pick({ description: true });
+
+export const imageSchema = createCourseSchema.pick({ imageUrl: true });
+
+export type CourseSchema = z.infer<typeof createCourseSchema>;

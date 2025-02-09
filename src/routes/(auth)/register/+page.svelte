@@ -5,8 +5,9 @@
 	import { Loader2 } from 'lucide-svelte';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
+	import type { PageData } from './$types';
 
-	export var data: any;
+	export let data: PageData;
 
 	const form = superForm(data.form, {
 		validators: zodClient(registerSchema)

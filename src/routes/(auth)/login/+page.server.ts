@@ -4,9 +4,19 @@ import type { ClientResponseError } from 'pocketbase';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 
+interface Login {
+	email: string;
+	password: string;
+}
+
+const login: Login = {
+	email: 'okegbemijoshua7@gmail.com',
+	password: 'developed@1'
+};
+
 export const load = async () => {
 	return {
-		form: await superValidate(zod(loginSchema))
+		form: await superValidate(login, zod(loginSchema))
 	};
 };
 
@@ -23,10 +33,7 @@ export const actions = {
 			});
 		}
 		try {
-			const user = await pb
-				.collection('users')
-				.authWithPassword(form.data.email, form.data.password);
-			console.log(user);
+			await pb.collection('users').authWithPassword(form.data.email, form.data.password);
 		} catch (err) {
 			const { status } = err as ClientResponseError;
 			return message(form, {

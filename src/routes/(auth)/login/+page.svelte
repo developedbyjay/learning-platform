@@ -6,7 +6,9 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export var data: any;
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 
 	const form = superForm(data.form, {
 		validators: zodClient(loginSchema)

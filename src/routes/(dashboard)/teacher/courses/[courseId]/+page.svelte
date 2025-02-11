@@ -4,6 +4,9 @@
 	import IconBadge from '$lib/components/IconBadge.svelte';
 	import TitleForm from '$lib/components/TitleForm.svelte';
 	import DescriptionForm from '$lib/components/DescriptionForm.svelte';
+	import ImageForm from '$lib/components/ImageForm.svelte';
+	import CategoryForm from '$lib/components/CategoryForm.svelte';
+
 	import {
 		AlertTriangle,
 		CircleDollarSign,
@@ -62,8 +65,8 @@
 
 			<TitleForm data={data.titleForm} />
 			<DescriptionForm data={data.descriptionForm} />
-			<ImageForm data={data.imageForm} />
-			<!-- Category Form -->
+			<ImageForm imageUrl={course.imageUrl} />
+			<CategoryForm data={data.categoryForm} categories={data.categories} />
 		</div>
 		<div class="space-y-6">
 			<div class="">

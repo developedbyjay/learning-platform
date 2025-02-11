@@ -1,4 +1,4 @@
-import { descriptionSchema, titleSchema,imageSchema } from '$lib/schema.js';
+import { descriptionSchema, titleSchema, categorySchema } from '$lib/schema.js';
 import type { Category, Course } from '$lib/types.js';
 import { error, redirect, fail } from '@sveltejs/kit';
 import type { ClientResponseError } from 'pocketbase';
@@ -46,15 +46,15 @@ export const load = async ({ params, locals: { user, pb } }) => {
 	const titleForm = await superValidate(course, zod(titleSchema));
 
 	const descriptionForm = await superValidate(course, zod(descriptionSchema));
-	
-	const imageForm = await superValidate(course, zod(imageSchema));
+
+	const categoryForm = await superValidate(course, zod(categorySchema));
 
 	return {
 		course: course as Course,
-		categories: categories as Category,
+		categories: categories as Category[],
 		titleForm,
 		descriptionForm,
-		imageForm
+		categoryForm
 	};
 };
 
@@ -106,10 +106,30 @@ export const actions = {
 	updateImage: async (event) => {
 		const {
 			locals: { pb },
+			params: { courseId },
+			request
+		} = event;
+
+		const formData = await request.formData();
+		const image = formData.get('image');
+
+		if (image instanceof File) {
+			try {
+				await pb.collection('courses').update(courseId, { imageUrl: image });
+				return { message: 'successfully updated course image' };
+			} catch (err) {
+				const { message: errorMessage } = err as ClientResponseError;
+				return fail(400, { message: errorMessage });
+			}
+		}
+	},
+	updateCategory: async (event) => {
+		const {
+			locals: { pb },
 			params: { courseId }
 		} = event;
 
-		const form = await superValidate(event, zod(imageSchema));
+		const form = await superValidate(event, zod(categorySchema));
 
 		if (!form.valid) {
 			return fail(400, {
@@ -119,12 +139,12 @@ export const actions = {
 
 		try {
 			await pb.collection('courses').update(courseId, form.data);
-			return message(form, 'successfully updated course description');
+
+			return message(form, 'successfully updated course category');
 		} catch (err) {
 			const { message: errorMessage } = err as ClientResponseError;
 			return message(form, errorMessage, { status: 400 });
 		}
 	}
+
 };
-
-

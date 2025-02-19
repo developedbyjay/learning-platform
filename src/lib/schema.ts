@@ -29,8 +29,12 @@ export const createCourseSchema = z.object({
 
 export const titleSchema = createCourseSchema.pick({ title: true });
 
+export const chapterTitleSchema = z.object({
+	title: z.string().min(1)
+});
+
 export const descriptionSchema = createCourseSchema.pick({ description: true });
 
 export const categorySchema = createCourseSchema.pick({ category: true });
-
+export const priceSchema = createCourseSchema.pick({ price: true });
 export type CourseSchema = z.infer<typeof createCourseSchema>;

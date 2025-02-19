@@ -46,6 +46,7 @@
 	},
 	"dependencies": {
 		"@fontsource/poppins": "^5.1.1",
-		"pocketbase": "^0.25.1"
+		"pocketbase": "^0.25.1",
+		"svelte-dnd-action": "^0.9.57"
 	}
 }

@@ -60,3 +60,8 @@ export const flyAndScale = (
 		easing: cubicOut
 	};
 };
+
+export function formatCurrency(num:number) {
+	if (isNaN(num)) return;
+	return new Intl.NumberFormat('en-ng', { style: 'currency', currency: 'NGN' }).format(num);
+}

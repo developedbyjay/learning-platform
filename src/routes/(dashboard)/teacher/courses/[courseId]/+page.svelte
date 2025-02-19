@@ -6,6 +6,9 @@
 	import DescriptionForm from '$lib/components/DescriptionForm.svelte';
 	import ImageForm from '$lib/components/ImageForm.svelte';
 	import CategoryForm from '$lib/components/CategoryForm.svelte';
+	import PriceForm from '$lib/components/PriceForm.svelte';
+	import AttachmentForm from '$lib/components/AttachmentForm.svelte';
+	import ChapterForm from '$lib/components/ChapterForm.svelte';
 
 	import {
 		AlertTriangle,
@@ -74,20 +77,22 @@
 					<IconBadge icon={ListChecks} />
 					<h2 class="text-xl">Course chapters</h2>
 				</div>
-				<!-- Chapter form  -->
+				<ChapterForm data={data.chapterTitleForm} chapters={course.expand?.['chapters(course)'] ?? []} />
+				 
 			</div>
 			<div class="">
 				<div class=" flex items-center gap-x-2">
 					<IconBadge icon={CircleDollarSign} />
 					<h2 class="text-xl">Sell your course</h2>
 				</div>
-				<!-- Price -->
+				<PriceForm data={data.priceForm} />
 			</div>
 			<div class="">
 				<div class=" flex items-center gap-x-2">
 					<IconBadge icon={File} />
 					<h2 class="text-xl">Resources & attachment</h2>
 				</div>
+				<AttachmentForm attachments={data.attachments ?? []} />
 			</div>
 		</div>
 	</div>

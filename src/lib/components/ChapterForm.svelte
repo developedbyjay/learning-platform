@@ -5,7 +5,7 @@
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import type { Chapter } from '$lib/types';
-	import { titleSchema } from '$lib/schema';
+	import { chapterTitleSchema } from '$lib/schema';
 	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
 
 	import { zodClient } from 'sveltekit-superforms/adapters';
@@ -13,10 +13,10 @@
 	import ChapterList from './ChapterList.svelte';
 	
 
-	export let data: SuperValidated<Infer<typeof titleSchema>>;
+	export let data: SuperValidated<Infer<typeof chapterTitleSchema>>;
 
 	const form = superForm(data, {
-		validators: zodClient(titleSchema),
+		validators: zodClient(chapterTitleSchema),
 		resetForm: false,
 		onUpdated({ form }) {
 			if (form.message && !form.valid) {

@@ -17,7 +17,7 @@
 		LayoutDashboard,
 		ListChecks
 	} from 'lucide-svelte';
-	// c72dr2k8m7lv29j
+
 	export let data: PageData;
 
 	$: course = data.course;
@@ -27,8 +27,8 @@
 		course.description,
 		course.imageUrl,
 		course.price,
-		course.category,
-		course.expand?.['chapters(course)']?.some((chapter) => chapter.isPublished)
+		course.category
+		// course.expand?.['chapters(course)']?.some((chapter) => chapter.isPublished)
 	];
 
 	$: totalFields = requiredFields.length;
@@ -53,7 +53,7 @@
 		<div class="flex flex-col gap-y-2">
 			<h1 class="text-2xl font-medium">Course Setup</h1>
 			<span class="text-sm text-muted-foreground">
-				complete all fields: {completedText}
+				{isComplete ? 'course fields completed.' : `complete all fields: ${completedText}`}
 			</span>
 		</div>
 		<!-- Actions -->
@@ -77,8 +77,10 @@
 					<IconBadge icon={ListChecks} />
 					<h2 class="text-xl">Course chapters</h2>
 				</div>
-				<ChapterForm data={data.chapterTitleForm} chapters={course.expand?.['chapters(course)'] ?? []} />
-				 
+				<ChapterForm
+					data={data.chapterTitleForm}
+					chapters={data.course.expand?.['chapters(course)'] ?? []}
+				/>
 			</div>
 			<div class="">
 				<div class=" flex items-center gap-x-2">
